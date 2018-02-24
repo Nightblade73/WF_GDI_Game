@@ -1,0 +1,10 @@
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\bin\Debug\WF_GDI_Game.exe.config
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\bin\Debug\WF_GDI_Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\bin\Debug\WF_GDI_Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.Main.resources
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.Properties.Resources.resources
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.csproj.GenerateResource.Cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.csproj.CoreCompileInputs.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WF_GDI_Game\obj\Debug\WF_GDI_Game.csprojResolveAssemblyReference.cache
