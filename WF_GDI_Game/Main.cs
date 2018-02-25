@@ -13,57 +13,35 @@ namespace WF_GDI_Game
 {
     public partial class Main : Form
     {
-
-        //scene = {
-        // polygons: [
-        //     { coords: [ 70,50,190,70,170,140,100,130 ],
-        //       colour: wallColour,
-        //       stroke: 1,
-        //       fill: true },
-        //     { coords: [ 230,50,350,70,330,140,305,90 ],
-        //       colour: wallColour,
-        //       stroke: 1,
-        //       fill: true },
-        //     { coords: [ 475,56,475,360,616,360,616,56 ],
-        //       colour: wallColour,
-        //       stroke: 1,
-        //       fill: true },
-        //     { coords: [ 374,300,374,450 ],
-        //       colour: wallColour,
-        //       stroke: 1,
-        //       fill: false },
-        //     { coords: [188.57143,381.89539,
-        //                167.824635,304.467285,
-        //                328.25502,261.480095,
-        //                268.205575,321.529535,
-        //                330.053215,357.237285,
-        //                207.155635,428.19224,
-        //                226.618645,355.55529],
-        //       color: wallColour,
-        //       stroke: 1,
-        //       fill: true },
-        //     { coords: [ 100,200,120,250,60,300 ],
-        //       colour: wallColour,
-        //       stroke: 1,
-        //       fill: true }
-        //     ]
-        //observer: { loc: vec2.fromValues(374, 203),
-        //            dir: vec2.fromValues(-0.707106781186, 0.707106781186),
-        //            colour: observerColour },
-        //target: { loc: vec2.fromValues(293, 100),
-        //          dir: vec2.fromValues(-1, 0),
-        //          colour: targetColour }
-
         List<Polygon> polygons;
         Player player;
+        //   Ray ray;
+        List<Ray> rays;
+        Bitmap bmp;
 
         public Main()
         {
             InitializeComponent();
             player = new Player(20, 20, 20);
-            player.XView = 50;
-            player.YView = 100;
+            rays = new List<Ray>();
+            //      ray.Begin = new Point(300, 230);
+
             polygons = new List<Polygon>();
+
+            for (double angle = 0; angle < Math.PI * 2; angle += (Math.PI * 2) / 50)
+            {
+
+                // Calculate dx & dy from angle
+                int dx = Convert.ToInt32(Math.Cos(angle) * 10);
+                int dy = Convert.ToInt32(Math.Sin(angle) * 10);
+
+                // Ray from center of screen to mouse
+                Ray ray = new Ray();
+                ray.Begin = new Point(20, 20);
+                ray.Mouse = new Point(20 + dx, 20 + dy);
+                rays.Add(ray);
+            }
+
             pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
             pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
             pictureBox.Location = new Point(0, 0);
@@ -80,6 +58,7 @@ namespace WF_GDI_Game
             if (e.KeyValue == 37)
             {
                 player.MoveLeft();
+
             }
             if (e.KeyValue == 38)
             {
@@ -93,35 +72,42 @@ namespace WF_GDI_Game
             {
                 player.MoveDown();
             }
-
-
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
+            if (bmp != null)
+                bmp.Dispose();
+            bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
             using (Graphics gr = Graphics.FromImage(bmp))
             {
                 player.Draw(gr);
-                foreach(Polygon pol in polygons)
+                foreach (Polygon pol in polygons)
                 {
                     pol.Draw(gr);
                 }
-                
+                foreach (Ray ray in rays)
+                {
+                    NewRay(ray);
+                    ray.Draw(gr);
+                }
             }
             pictureBox.Image = bmp;
-
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            player.XView = e.X;
-            player.YView = e.Y;
+        { 
+            foreach (Ray ray in rays)
+            {
+                ray.Begin.X = e.X;
+                ray.Begin.Y = e.Y;
+            }
+
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-          //  pictureBox.Invalidate();
+            //  pictureBox.Invalidate();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -133,8 +119,36 @@ namespace WF_GDI_Game
                     Polygon polygon = new Polygon(sr.ReadLine());
                     polygons.Add(polygon);
                 }
-                
+
             }
         }
+        private void NewRay(Ray ray)
+        {
+            ParamPoint closestIntersect = null;
+            for (int i = 0; i < polygons.Count; i++)
+            {
+                for (int j = 0; j < polygons[i].segments.Count; j++)
+                {
+                    ParamPoint intersect = Intersection.GetIntersection(ray, polygons[i].segments[j]);
+                    if (intersect != null)
+                    {
+                        if (closestIntersect != null)
+                        {
+                            if (intersect.T1 < closestIntersect.T1)
+                            {
+                                closestIntersect = intersect;
+                            }
+                        }
+                        else
+                        {
+                            closestIntersect = intersect;
+                        }
+                    }
+                }
+            }
+            if (closestIntersect != null)
+                ray.Mouse = new Point(closestIntersect.Intersection.X, closestIntersect.Intersection.Y);
+        }
+        
     }
 }

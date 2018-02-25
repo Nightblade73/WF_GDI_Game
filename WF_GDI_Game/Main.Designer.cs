@@ -36,7 +36,7 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.BackColor = System.Drawing.Color.DimGray;
+            this.pictureBox.BackColor = System.Drawing.Color.Gainsboro;
             this.pictureBox.Location = new System.Drawing.Point(50, 47);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(89, 52);

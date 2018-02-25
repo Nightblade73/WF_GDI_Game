@@ -7,43 +7,41 @@ using System.Threading.Tasks;
 
 namespace WF_GDI_Game
 {
-    class Player
+    class Ray
     {
-        public int X { set; get; }
-        public int Y { set; get; }
-        public int Size { set; get; }
+        public Point Begin = new Point();
         private int speed = 5;
+        public Point Mouse { set; get; }
 
-        public Player(int x, int y, int size)
-        {
-            X = x;
-            Y = y;
-            Size = size;
-        }
+        //public Ray(int x, int y)
+        //{
+        //    X = x;
+        //    Y = y;
+        //}
 
         public void Draw(Graphics gr)
         {
-            gr.FillEllipse(new SolidBrush(Color.Red), X - Size / 2, Y - Size / 2, Size, Size);
+            gr.DrawLine(new Pen(Color.Red, 1), Begin.X, Begin.Y, (float)Mouse.X, (float)Mouse.Y);
         }
 
         public void MoveUp()
         {
-            Y -= speed;
+            Begin.Y -= speed;
         }
 
         public void MoveDown()
         {
-            Y += speed;
+            Begin. Y += speed;
         }
 
         public void MoveRight()
         {
-            X += speed;
+            Begin.X += speed;
         }
 
         public void MoveLeft()
         {
-            X -= speed;
+            Begin.X -= speed;
         }
     }
 }

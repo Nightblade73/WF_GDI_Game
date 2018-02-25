@@ -9,23 +9,33 @@ namespace WF_GDI_Game
 {
     class Polygon
     {
-        List<Point> points = new List<Point>();
-
+        public List<Segment> segments = new List<Segment>();
 
         public Polygon(string points)
         {
             string[] point = points.Split(';');
             for (int i = 0; i < point.Length; i++)
             {
-                this.points.Add(new Point(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])));
+                if (i == point.Length-1)
+                {
+                    Segment lastSeg = new Segment(new Point(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
+                    new Point(Convert.ToInt32(point[0].Split(',')[0]), Convert.ToInt32(point[0].Split(',')[1])));
+                    segments.Add(lastSeg);
+                    break;
+                }
+                Segment segment = new Segment(new Point(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
+                    new Point(Convert.ToInt32(point[i + 1].Split(',')[0]), Convert.ToInt32(point[i + 1].Split(',')[1])));
+                
+                segments.Add(segment);
             }
         }
+
         public void Draw(Graphics gr)
         {
-            
-            gr.FillPolygon(new SolidBrush(Color.FromArgb(170, 170, 170)), points.ToArray());
+            foreach (Segment segment in segments)
+            {
+                gr.DrawLine(new Pen(Color.FromArgb(105, 105, 105)), segment.Begin, segment.End);
+            }
         }
-
-
     }
 }
