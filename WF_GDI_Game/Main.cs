@@ -58,19 +58,27 @@ namespace WF_GDI_Game
             if (e.KeyValue == 37)
             {
                 player.MoveLeft();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveLeft();
 
             }
             if (e.KeyValue == 38)
             {
                 player.MoveUp();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveUp();
             }
             if (e.KeyValue == 39)
             {
                 player.MoveRight();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveRight();
             }
             if (e.KeyValue == 40)
             {
                 player.MoveDown();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveDown();
             }
         }
 
@@ -97,11 +105,11 @@ namespace WF_GDI_Game
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         { 
-            foreach (Ray ray in rays)
-            {
-                ray.Begin.X = e.X;
-                ray.Begin.Y = e.Y;
-            }
+            //foreach (Ray ray in rays)
+            //{
+            //    ray.Begin.X = e.X;
+            //    ray.Begin.Y = e.Y;
+            //}
 
         }
 
