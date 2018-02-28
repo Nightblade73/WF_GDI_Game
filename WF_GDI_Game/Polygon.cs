@@ -18,12 +18,12 @@ namespace WF_GDI_Game
             {
                 if (i == point.Length-1)
                 {
-                    Segment lastSeg = new Segment(new Point(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
+                    Segment lastSeg = new Segment(new PointF(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
                     new Point(Convert.ToInt32(point[0].Split(',')[0]), Convert.ToInt32(point[0].Split(',')[1])));
                     segments.Add(lastSeg);
                     break;
                 }
-                Segment segment = new Segment(new Point(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
+                Segment segment = new Segment(new PointF(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
                     new Point(Convert.ToInt32(point[i + 1].Split(',')[0]), Convert.ToInt32(point[i + 1].Split(',')[1])));
                 
                 segments.Add(segment);

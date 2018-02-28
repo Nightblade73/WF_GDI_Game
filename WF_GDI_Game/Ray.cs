@@ -9,9 +9,9 @@ namespace WF_GDI_Game
 {
     class Ray
     {
-        public Point Begin = new Point();
-        private int speed = 5;
-        public Point Mouse { set; get; }
+        public PointF Begin = new Point();
+        private int speed = 2;
+        public PointF Mouse { set; get; }
 
         //public Ray(int x, int y)
         //{
@@ -21,7 +21,7 @@ namespace WF_GDI_Game
 
         public void Draw(Graphics gr)
         {
-            gr.DrawLine(new Pen(Color.Red, 1), Begin.X, Begin.Y, (float)Mouse.X, (float)Mouse.Y);
+            gr.DrawLine(new Pen(Color.Red, 1), Begin.X, Begin.Y, Mouse.X, Mouse.Y);
         }
 
         public void MoveUp()

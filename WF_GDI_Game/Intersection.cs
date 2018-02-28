@@ -50,7 +50,7 @@ namespace WF_GDI_Game
                 return null;
             return new ParamPoint
             {
-                Intersection = new Point((int)(r_px + r_dx * T1), (int)(r_py + r_dy * T1)),
+                Intersection = new PointF((float)(r_px + r_dx * T1), (float)(r_py + r_dy * T1)),
                 T1 = T1
             };
         }

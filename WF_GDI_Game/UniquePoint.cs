@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace WF_GDI_Game
 {
-    class ParamPoint
+    class UniquePoint
     {
-        public PointF Intersection { set; get; }
+        public PointF Point { set; get; }
 
-        public double T1 { set; get; }
+        public float Angle { set; get; }
     }
 }

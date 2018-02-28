@@ -17,30 +17,18 @@ namespace WF_GDI_Game
         Player player;
         //   Ray ray;
         List<Ray> rays;
+        List<ParamPoint> intersects;
+        List<UniquePoint> uniquePoints;
+        List<float> uniqueAngles;
         Bitmap bmp;
 
         public Main()
         {
             InitializeComponent();
             player = new Player(20, 20, 20);
-            rays = new List<Ray>();
-            //      ray.Begin = new Point(300, 230);
-
             polygons = new List<Polygon>();
-
-            for (double angle = 0; angle < Math.PI * 2; angle += (Math.PI * 2) / 50)
-            {
-
-                // Calculate dx & dy from angle
-                int dx = Convert.ToInt32(Math.Cos(angle) * 10);
-                int dy = Convert.ToInt32(Math.Sin(angle) * 10);
-
-                // Ray from center of screen to mouse
-                Ray ray = new Ray();
-                ray.Begin = new Point(20, 20);
-                ray.Mouse = new Point(20 + dx, 20 + dy);
-                rays.Add(ray);
-            }
+            uniqueAngles = new List<float>();
+            intersects = new List<ParamPoint>();
 
             pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
             pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
@@ -84,6 +72,17 @@ namespace WF_GDI_Game
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
+            uniqueAngles.Clear();
+            for (int j = 0; j < uniquePoints.Count; j++)
+            {
+                var uniquePoint = uniquePoints[j];
+                float angle = (float)Math.Atan2(uniquePoint.Point.Y - player.Y, uniquePoint.Point.X - player.X);
+                uniquePoint.Angle = angle;
+                uniqueAngles.Add((float)(angle - 0.00002));
+                uniqueAngles.Add(angle);
+                uniqueAngles.Add((float)(angle + 0.00002));
+            }
+
             if (bmp != null)
                 bmp.Dispose();
             bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
@@ -94,17 +93,30 @@ namespace WF_GDI_Game
                 {
                     pol.Draw(gr);
                 }
-                foreach (Ray ray in rays)
+                for (var j = 0; j < uniqueAngles.Count; j++)
                 {
-                    NewRay(ray);
-                    ray.Draw(gr);
+                    var angle = uniqueAngles[j];
+
+                    // Calculate dx & dy from angle
+                    var dx = Math.Cos(Convert.ToDouble(angle));
+                    var dy = Math.Sin(Convert.ToDouble(angle));
+
+                    // Ray from center of screen to mouse
+                    rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
+                    NewRay(rays[j]);
+                    rays[j].Draw(gr);
                 }
+                for (var j = 0; j < uniqueAngles.Count-1; j++)
+                {  
+                    PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j+1].Mouse };
+                    gr.FillPolygon(new SolidBrush(Color.Red), p);
+                }
+                pictureBox.Image = bmp;
             }
-            pictureBox.Image = bmp;
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        { 
+        {
             //foreach (Ray ray in rays)
             //{
             //    ray.Begin.X = e.X;
@@ -120,12 +132,33 @@ namespace WF_GDI_Game
 
         private void Main_Load(object sender, EventArgs e)
         {
+            uniquePoints = new List<UniquePoint>();
+            rays = new List<Ray>();
             using (StreamReader sr = new StreamReader("polygons.txt"))
             {
                 while (!sr.EndOfStream)
                 {
-                    Polygon polygon = new Polygon(sr.ReadLine());
+                    string line = sr.ReadLine();
+                    string[] point = line.Split(';');
+                    for (int i = 0; i < point.Length; i++)
+                    {
+                        UniquePoint uniquePoint = new UniquePoint
+                        {
+                            Point = new PointF(float.Parse(point[i].Split(',')[0]), float.Parse(point[i].Split(',')[1]))
+                        };
+                        uniquePoints.Add(uniquePoint);
+                        
+                    }
+                    Polygon polygon = new Polygon(line);
                     polygons.Add(polygon);
+                    for (int i = 0; i < point.Length*3; i++)
+                    {
+                        Ray ray = new Ray
+                        {
+                            Begin = new Point(20, 20)
+                        };
+                        rays.Add(ray);
+                    }
                 }
 
             }
@@ -155,8 +188,8 @@ namespace WF_GDI_Game
                 }
             }
             if (closestIntersect != null)
-                ray.Mouse = new Point(closestIntersect.Intersection.X, closestIntersect.Intersection.Y);
+                ray.Mouse = new PointF(closestIntersect.Intersection.X, closestIntersect.Intersection.Y);
         }
-        
+
     }
 }
