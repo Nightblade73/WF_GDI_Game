@@ -34,7 +34,7 @@ namespace WF_GDI_Game
         {
             foreach (Segment segment in segments)
             {
-                gr.DrawLine(new Pen(Color.FromArgb(105, 105, 105)), segment.Begin, segment.End);
+                gr.DrawLine(new Pen(Color.FromArgb(255, 255, 255)), segment.Begin, segment.End);
             }
         }
     }

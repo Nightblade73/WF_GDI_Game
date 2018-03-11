@@ -57,6 +57,7 @@
     <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuickSorting.cs" />
     <Compile Include="Ray.cs" />
     <Compile Include="Segment.cs" />
     <Compile Include="UniqueAngle.cs" />

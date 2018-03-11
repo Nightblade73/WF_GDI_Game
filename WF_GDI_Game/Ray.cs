@@ -10,7 +10,7 @@ namespace WF_GDI_Game
     class Ray
     {
         public PointF Begin = new Point();
-        private int speed = 2;
+        private int speed = 1;
         public PointF Mouse { set; get; }
 
         //public Ray(int x, int y)

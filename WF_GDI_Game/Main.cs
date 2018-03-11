@@ -13,6 +13,7 @@ namespace WF_GDI_Game
 {
     public partial class Main : Form
     {
+        bool up, down, left, right;
         List<Polygon> polygons;
         Player player;
         //   Ray ray;
@@ -39,39 +40,31 @@ namespace WF_GDI_Game
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == 115)
+            if (e.KeyValue == 27)
             {
                 Close();
             }
             if (e.KeyValue == 37)
             {
-                player.MoveLeft();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveLeft();
-
+                left = true;
             }
             if (e.KeyValue == 38)
             {
-                player.MoveUp();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveUp();
+                up = true;
             }
             if (e.KeyValue == 39)
             {
-                player.MoveRight();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveRight();
+                right = true;
             }
             if (e.KeyValue == 40)
             {
-                player.MoveDown();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveDown();
+                down = true;
             }
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
+            pictureBox.Invalidate();
             uniqueAngles.Clear();
             for (int j = 0; j < uniquePoints.Count; j++)
             {
@@ -82,36 +75,64 @@ namespace WF_GDI_Game
                 uniqueAngles.Add(angle);
                 uniqueAngles.Add((float)(angle + 0.00002));
             }
+            QuickSorting.Sorting(uniqueAngles, 0, uniqueAngles.Count - 1);
 
-            if (bmp != null)
-                bmp.Dispose();
-            bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
-            using (Graphics gr = Graphics.FromImage(bmp))
+            //if (bmp != null)
+            //    bmp.Dispose();
+            //bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
+            //using (Graphics gr = Graphics.FromImage(bmp))
+            //{
+            
+            foreach (Polygon pol in polygons)
             {
-                player.Draw(gr);
-                foreach (Polygon pol in polygons)
-                {
-                    pol.Draw(gr);
-                }
-                for (var j = 0; j < uniqueAngles.Count; j++)
-                {
-                    var angle = uniqueAngles[j];
+                pol.Draw(e.Graphics);
+            }
+            for (var j = 0; j < uniqueAngles.Count; j++)
+            {
+                var angle = uniqueAngles[j];
 
-                    // Calculate dx & dy from angle
-                    var dx = Math.Cos(Convert.ToDouble(angle));
-                    var dy = Math.Sin(Convert.ToDouble(angle));
+                // Calculate dx & dy from angle
+                var dx = Math.Cos(Convert.ToDouble(angle));
+                var dy = Math.Sin(Convert.ToDouble(angle));
 
-                    // Ray from center of screen to mouse
-                    rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
-                    NewRay(rays[j]);
-                    rays[j].Draw(gr);
-                }
-                for (var j = 0; j < uniqueAngles.Count-1; j++)
-                {  
-                    PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j+1].Mouse };
-                    gr.FillPolygon(new SolidBrush(Color.Red), p);
-                }
-                pictureBox.Image = bmp;
+                // Ray from center of screen to mouse
+                rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
+                NewRay(rays[j]);
+                //    rays[j].Draw(e.Graphics);
+            }
+            for (var j = 0; j < uniqueAngles.Count - 1; j++)
+            {
+                PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
+                e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(255, 255, 255)), p);
+            }
+            PointF[] plast = { new PointF(player.X, player.Y), rays[0].Mouse, rays[uniqueAngles.Count - 1].Mouse };
+            e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(255, 255, 255)), plast);
+            //    pictureBox.Image = bmp;
+            //}
+            player.Draw(e.Graphics);
+            if (left)
+            {
+                player.MoveLeft();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveLeft();
+            }
+            if (up)
+            {
+                player.MoveUp();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveUp();
+            }
+            if (right)
+            {
+                player.MoveRight();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveRight();
+            }
+            if (down)
+            {
+                player.MoveDown();
+                for (int i = 0; i < rays.Count; i++)
+                    rays[i].MoveDown();
             }
         }
 
@@ -122,7 +143,26 @@ namespace WF_GDI_Game
             //    ray.Begin.X = e.X;
             //    ray.Begin.Y = e.Y;
             //}
+        }
 
+        private void Main_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 37)
+            {
+                left = false;
+            }
+            if (e.KeyValue == 38)
+            {
+                up = false;
+            }
+            if (e.KeyValue == 39)
+            {
+                right = false;
+            }
+            if (e.KeyValue == 40)
+            {
+                down = false;
+            }
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -147,11 +187,11 @@ namespace WF_GDI_Game
                             Point = new PointF(float.Parse(point[i].Split(',')[0]), float.Parse(point[i].Split(',')[1]))
                         };
                         uniquePoints.Add(uniquePoint);
-                        
+
                     }
                     Polygon polygon = new Polygon(line);
                     polygons.Add(polygon);
-                    for (int i = 0; i < point.Length*3; i++)
+                    for (int i = 0; i < point.Length * 3; i++)
                     {
                         Ray ray = new Ray
                         {

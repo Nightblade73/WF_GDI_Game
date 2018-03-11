@@ -29,7 +29,7 @@ namespace WF_GDI_Game
             double r_mag = Math.Sqrt(r_dx * r_dx + r_dy * r_dy);
             double s_mag = Math.Sqrt(s_dx * s_dx + s_dy * s_dy);
             if (r_dx / r_mag == s_dx / s_mag && r_dy / r_mag == s_dy / s_mag)
-            { // Directions are the same.
+            { // Направления совпадают
                 return null;
             }
 
@@ -45,9 +45,16 @@ namespace WF_GDI_Game
             if (T1 < 0) return null;
             if (T2 < 0 || T2 > 1) return null;
 
-            // Return the POINT OF INTERSECTION -2147483648
+            // Деление на ноль возвращает такое интовское значение -2147483648
+            // Избавляемся от него повторной операцией со смещением по Х
             if ((int)(r_px + r_dx * T1) == -2147483648)
-                return null;
+            {
+                r_dx += 0.0001;
+                T2 = (r_dx * (s_py - r_py) + r_dy * (r_px - s_px)) / (s_dx * r_dy - s_dy * r_dx);
+                T1 = (s_px + s_dx * T2 - r_px) / r_dx;
+                if (T1 < 0) return null;
+                if (T2 < 0 || T2 > 1) return null;
+            }
             return new ParamPoint
             {
                 Intersection = new PointF((float)(r_px + r_dx * T1), (float)(r_py + r_dy * T1)),
