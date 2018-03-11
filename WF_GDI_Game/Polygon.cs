@@ -11,20 +11,20 @@ namespace WF_GDI_Game
     {
         public List<Segment> segments = new List<Segment>();
 
-        public Polygon(string points)
+        public Polygon(string[] points)
         {
-            string[] point = points.Split(';');
-            for (int i = 0; i < point.Length; i++)
+          //  string[] point = points.Split(';');
+            for (int i = 0; i < points.Length-1; i++)
             {
-                if (i == point.Length-1)
-                {
-                    Segment lastSeg = new Segment(new PointF(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
-                    new Point(Convert.ToInt32(point[0].Split(',')[0]), Convert.ToInt32(point[0].Split(',')[1])));
-                    segments.Add(lastSeg);
-                    break;
-                }
-                Segment segment = new Segment(new PointF(Convert.ToInt32(point[i].Split(',')[0]), Convert.ToInt32(point[i].Split(',')[1])),
-                    new Point(Convert.ToInt32(point[i + 1].Split(',')[0]), Convert.ToInt32(point[i + 1].Split(',')[1])));
+                //if (i == points.Length-1)
+                //{
+                //    Segment lastSeg = new Segment(new PointF(Convert.ToInt32(points[i].Split(',')[0]), Convert.ToInt32(points[i].Split(',')[1])),
+                //    new Point(Convert.ToInt32(points[0].Split(',')[0]), Convert.ToInt32(points[0].Split(',')[1])));
+                //    segments.Add(lastSeg);
+                //    break;
+                //}
+                Segment segment = new Segment(new PointF(Convert.ToInt32(points[i].Split(',')[0]), Convert.ToInt32(points[i].Split(',')[1])),
+                    new Point(Convert.ToInt32(points[i + 1].Split(',')[0]), Convert.ToInt32(points[i + 1].Split(',')[1])));
                 
                 segments.Add(segment);
             }

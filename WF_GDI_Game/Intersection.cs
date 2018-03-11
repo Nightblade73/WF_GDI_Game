@@ -49,7 +49,7 @@ namespace WF_GDI_Game
             // Избавляемся от него повторной операцией со смещением по Х
             if ((int)(r_px + r_dx * T1) == -2147483648)
             {
-                r_dx += 0.0001;
+                r_dx += 0.000001;
                 T2 = (r_dx * (s_py - r_py) + r_dy * (r_px - s_px)) / (s_dx * r_dy - s_dy * r_dx);
                 T1 = (s_px + s_dx * T2 - r_px) / r_dx;
                 if (T1 < 0) return null;
