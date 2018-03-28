@@ -61,5 +61,55 @@ namespace WF_GDI_Game
                 T1 = T1
             };
         }
+
+        public static bool CheckIntersect(Player player, Segment segment)
+        {
+            return СircleBySegment(segment.Begin.X, segment.Begin.Y, segment.End.X, segment.End.Y,player.X,player.Y,player.Size/2);
+        }
+
+        public static bool CheckIntersect(Player player, List<Polygon> polygons)
+        {
+            foreach (Polygon pol in polygons)
+            {
+                foreach (Segment seg in pol.segments)
+                {
+                    if (CheckIntersect(player, seg))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        static bool СircleBySegment(float x1, float y1, float x2, float y2, float x3, float y3, float radius)
+        {
+            var a = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+            var b = 2 * ((x2 - x1) * (x1 - x3) + (y2 - y1) * (y1 - y3));
+            var c = x3 * x3 + y3 * y3 + x1 * x1 + y1 * y1 - 2 * (x3 * x1 + y3 * y1) - radius * radius;
+            //т.е. если если есть отрицательные корни, то пересечение есть. анализируем теорему виета и формулу корней
+            //на предмет отрицательных корней
+            if (-b < 0)
+            {
+                return (c < 0);
+            }
+            if (-b < (2 * a))
+            {
+                return (4 * a * c - b * b < 0);
+            }
+
+            return (a + b + c < 0);
+        }
+        static bool CheckArea(Player player, Segment segment)
+        {
+            if (segment.Begin.X > segment.End.X)
+            {
+                Console.WriteLine(true);
+                return true;
+            }
+            else  //нет корней
+            {
+                return false;
+            }
+        }
     }
 }

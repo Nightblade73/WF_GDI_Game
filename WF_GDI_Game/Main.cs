@@ -35,10 +35,8 @@ namespace WF_GDI_Game
                 Begin = new PointF(player.X, player.Y),
                 Mouse = new PointF(Cursor.Position.X, Cursor.Position.Y)
             };
-            Cursor.Hide();
             pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
             pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
-            pictureBox.Location = new Point(0, 0);
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
@@ -47,19 +45,19 @@ namespace WF_GDI_Game
             {
                 Close();
             }
-            if (e.KeyValue == 37)
+            if (e.KeyCode == Keys.A)
             {
                 left = true;
             }
-            if (e.KeyValue == 38)
+            if (e.KeyCode == Keys.W)
             {
                 up = true;
             }
-            if (e.KeyValue == 39)
+            if (e.KeyCode == Keys.D)
             {
                 right = true;
             }
-            if (e.KeyValue == 40)
+            if (e.KeyCode == Keys.S)
             {
                 down = true;
             }
@@ -82,7 +80,7 @@ namespace WF_GDI_Game
                 float angle = (float)Math.Atan2(uniquePoint.Point.Y - player.Y, uniquePoint.Point.X - player.X);
                 if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
                 {
-                    uniquePoint.Angle = angle; // в местах добавления углов доступна оптимизация
+                    uniquePoint.Angle = angle; // в местах добавления углов доступна оптимизация по выбору полярности векторов
                     uniqueAngles.Add((float)(angle - 0.0002));
                     uniqueAngles.Add(angle);
                     uniqueAngles.Add((float)(angle + 0.0002));
@@ -100,7 +98,7 @@ namespace WF_GDI_Game
                 {
                     continue;
                 }
-                if(angle > angleMouseRayLeft & angle < angleMouseRayRight)
+                if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
                 {
                     uniquePoint.Angle = angle;
                     uniqueAngles.Add((float)(angle - 0.0002));
@@ -110,18 +108,10 @@ namespace WF_GDI_Game
             }
 
             QuickSorting.Sorting(uniqueAngles, 0, uniqueAngles.Count - 1);
-
-            //if (bmp != null)
-            //    bmp.Dispose();
-            //bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
-            //using (Graphics gr = Graphics.FromImage(bmp))
-            //{
-            // много раз рисуешь зачем-то полигоны
             foreach (Polygon pol in polygons)
             {
                 pol.Draw(e.Graphics);
             }
-
 
             //расчитываешь для каждого уникального угла ближайшую точку пересечения
             for (var j = 0; j < uniqueAngles.Count; j++)
@@ -142,40 +132,54 @@ namespace WF_GDI_Game
                 PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
                 e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), p);
             }
-            //PointF[] plast = { new PointF(player.X, player.Y), rays[0].Mouse, rays[uniqueAngles.Count - 1].Mouse };
-            //e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50,255, 255, 255)), plast);
-            //    pictureBox.Image = bmp;
-            //}
-            mouseRay.Draw(e.Graphics);
+
             player.Draw(e.Graphics);
+
             if (left)
             {
-                player.MoveLeft();
-                mouseRay.MoveLeft();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveLeft();
+                Player falsePlayer = new Player(player.X - player.speed*2, player.Y, player.Size);
+                if (!Intersection.CheckIntersect(falsePlayer, polygons))
+                {
+                    player.MoveLeft();
+                    mouseRay.MoveLeft();
+                    for (int i = 0; i < rays.Count; i++)
+                        rays[i].MoveLeft();
+                }
             }
             if (up)
             {
-                player.MoveUp();
-                mouseRay.MoveUp();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveUp();
+                Player falsePlayer = new Player(player.X, player.Y - player.speed*2, player.Size);
+                if (!Intersection.CheckIntersect(falsePlayer, polygons))
+                {
+                    player.MoveUp();
+                    mouseRay.MoveUp();
+                    for (int i = 0; i < rays.Count; i++)
+                        rays[i].MoveUp();
+                }
             }
             if (right)
             {
-                player.MoveRight();
-                mouseRay.MoveRight();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveRight();
+                Player falsePlayer = new Player(player.X + player.speed*2, player.Y, player.Size);
+                if (!Intersection.CheckIntersect(falsePlayer, polygons))
+                {
+                    player.MoveRight();
+                    mouseRay.MoveRight();
+                    for (int i = 0; i < rays.Count; i++)
+                        rays[i].MoveRight();
+                }
             }
             if (down)
             {
-                player.MoveDown();
-                mouseRay.MoveDown();
-                for (int i = 0; i < rays.Count; i++)
-                    rays[i].MoveDown();
+                Player falsePlayer = new Player(player.X, player.Y + player.speed*2, player.Size);
+                if (!Intersection.CheckIntersect(falsePlayer, polygons))
+                {
+                    player.MoveDown();
+                    mouseRay.MoveDown();
+                    for (int i = 0; i < rays.Count; i++)
+                        rays[i].MoveDown();
+                }
             }
+
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -185,19 +189,19 @@ namespace WF_GDI_Game
 
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == 37)
+            if (e.KeyCode == Keys.A)
             {
                 left = false;
             }
-            if (e.KeyValue == 38)
+            if (e.KeyCode == Keys.W)
             {
                 up = false;
             }
-            if (e.KeyValue == 39)
+            if (e.KeyCode == Keys.D)
             {
                 right = false;
             }
-            if (e.KeyValue == 40)
+            if (e.KeyCode == Keys.S)
             {
                 down = false;
             }
@@ -205,7 +209,7 @@ namespace WF_GDI_Game
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            //  pictureBox.Invalidate();
+            
         }
 
         private void Main_Load(object sender, EventArgs e)

@@ -25,7 +25,6 @@ namespace WF_GDI_Game
                 //}
                 Segment segment = new Segment(new PointF(Convert.ToInt32(points[i].Split(',')[0]), Convert.ToInt32(points[i].Split(',')[1])),
                     new Point(Convert.ToInt32(points[i + 1].Split(',')[0]), Convert.ToInt32(points[i + 1].Split(',')[1])));
-                
                 segments.Add(segment);
             }
         }

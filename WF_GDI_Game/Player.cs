@@ -12,7 +12,7 @@ namespace WF_GDI_Game
         public int X { set; get; }
         public int Y { set; get; }
         public int Size { set; get; }
-        private int speed = 1;
+        public int speed = 1;
 
         public Player(int x, int y, int size)
         {
