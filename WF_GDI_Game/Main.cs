@@ -64,10 +64,151 @@ namespace WF_GDI_Game
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            
+        {           
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            //uniqueAngles.Clear();
+            //float angleMouseRay = (float)Math.Atan2(mouseRay.Mouse.Y - player.Y, mouseRay.Mouse.X - player.X);
+            //float dxАngleMouseRay = (float)Math.Cos(Convert.ToDouble(angleMouseRay));
+            //float dyАngleMouseRay = (float)Math.Sin(Convert.ToDouble(angleMouseRay));
+            //float angleMouseRayLeft = angleMouseRay - 0.5f;
+            //float angleMouseRayRight = angleMouseRay + 0.5f;
+            //uniqueAngles.Add(angleMouseRayLeft);
+            //uniqueAngles.Add(angleMouseRayRight);
+            ////высчитываем уникальные углы
+            //for (int j = 0; j < uniquePoints.Count; j++)
+            //{
+            //    var uniquePoint = uniquePoints[j];
+            //    float angle = (float)Math.Atan2(uniquePoint.Point.Y - player.Y, uniquePoint.Point.X - player.X);
+            //    if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
+            //    {
+            //        uniquePoint.Angle = angle; // в местах добавления углов доступна оптимизация по выбору полярности векторов
+            //        uniqueAngles.Add((float)(angle - 0.0002));
+            //        uniqueAngles.Add(angle);
+            //        uniqueAngles.Add((float)(angle + 0.0002));
+            //        continue;
+            //    }
+            //    if (angleMouseRayLeft < -Math.PI)
+            //    {
+            //        angle -= (float)(2 * Math.PI);
+            //    }
+            //    else if (angleMouseRayRight > Math.PI)
+            //    {
+            //        angle += (float)(2 * Math.PI);
+            //    }
+            //    else
+            //    {
+            //        continue;
+            //    }
+            //    if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
+            //    {
+            //        uniquePoint.Angle = angle;
+            //        uniqueAngles.Add((float)(angle - 0.0002));
+            //        uniqueAngles.Add(angle);
+            //        uniqueAngles.Add((float)(angle + 0.0002));
+            //    }
+            //}
+
+            //QuickSorting.Sorting(uniqueAngles, 0, uniqueAngles.Count - 1);
+            foreach (Polygon pol in polygons)
+            {
+                pol.Draw(e.Graphics);
+            }
+
+            //расчитываешь для каждого уникального угла ближайшую точку пересечения
+            for (var j = 0; j < uniqueAngles.Count; j++)
+            {
+                //var dx = Math.Cos(Convert.ToDouble(uniqueAngles[j]));
+                //var dy = Math.Sin(Convert.ToDouble(uniqueAngles[j]));
+
+                //// Ray from center of screen to mouse
+                //rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
+                //NewRay(rays[j]);
+                rays[j].Draw(e.Graphics);
+            }
+            for (var j = 0; j < uniqueAngles.Count - 1; j++)
+            {
+                PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
+                e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), p);
+            }
+
+            player.Draw(e.Graphics);
+
+            //if (left)
+            //{
+            //    Player falsePlayer = new Player(player.X - player.speed * 2, player.Y, player.Size);
+            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
+            //    {
+            //        player.MoveLeft();
+            //        mouseRay.MoveLeft();
+            //        for (int i = 0; i < rays.Count; i++)
+            //            rays[i].MoveLeft();
+            //    }
+            //}
+            //if (up)
+            //{
+            //    Player falsePlayer = new Player(player.X + dxАngleMouseRay * player.speed * 2, player.Y + dyАngleMouseRay * player.speed * 2, player.Size);
+            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
+            //    {
+            //        player.MoveUp(dxАngleMouseRay, dyАngleMouseRay);
+            //        mouseRay.MoveUp(dxАngleMouseRay, dyАngleMouseRay);
+            //        for (int i = 0; i < rays.Count; i++)
+            //            rays[i].MoveUp(dxАngleMouseRay, dyАngleMouseRay);
+            //    }
+            //}
+            //if (right)
+            //{
+            //    Player falsePlayer = new Player(player.X + player.speed * 2, player.Y, player.Size);
+            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
+            //    {
+            //        player.MoveRight();
+            //        mouseRay.MoveRight();
+            //        for (int i = 0; i < rays.Count; i++)
+            //            rays[i].MoveRight();
+            //    }
+            //}
+            //if (down)
+            //{
+            //    Player falsePlayer = new Player(player.X, player.Y + player.speed * 2, player.Size);
+            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
+            //    {
+            //        player.MoveDown();
+            //        mouseRay.MoveDown();
+            //        for (int i = 0; i < rays.Count; i++)
+            //            rays[i].MoveDown();
+            //    }
+            //}
+
+        }
+
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            mouseRay.Mouse = new PointF(e.X, e.Y);
+        }
+
+        private void Main_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A)
+            {
+                left = false;
+            }
+            if (e.KeyCode == Keys.W)
+            {
+                up = false;
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                right = false;
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                down = false;
+            }
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
             uniqueAngles.Clear();
+            //
             float angleMouseRay = (float)Math.Atan2(mouseRay.Mouse.Y - player.Y, mouseRay.Mouse.X - player.X);
             float dxАngleMouseRay = (float)Math.Cos(Convert.ToDouble(angleMouseRay));
             float dyАngleMouseRay = (float)Math.Sin(Convert.ToDouble(angleMouseRay));
@@ -110,10 +251,6 @@ namespace WF_GDI_Game
             }
 
             QuickSorting.Sorting(uniqueAngles, 0, uniqueAngles.Count - 1);
-            foreach (Polygon pol in polygons)
-            {
-                pol.Draw(e.Graphics);
-            }
 
             //расчитываешь для каждого уникального угла ближайшую точку пересечения
             for (var j = 0; j < uniqueAngles.Count; j++)
@@ -124,15 +261,7 @@ namespace WF_GDI_Game
                 // Ray from center of screen to mouse
                 rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
                 NewRay(rays[j]);
-                rays[j].Draw(e.Graphics);
             }
-            for (var j = 0; j < uniqueAngles.Count - 1; j++)
-            {
-                PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
-                e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), p);
-            }
-
-            player.Draw(e.Graphics);
 
             if (left)
             {
@@ -178,38 +307,6 @@ namespace WF_GDI_Game
                         rays[i].MoveDown();
                 }
             }
-
-        }
-
-        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            mouseRay.Mouse = new PointF(e.X, e.Y);
-        }
-
-        private void Main_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.A)
-            {
-                left = false;
-            }
-            if (e.KeyCode == Keys.W)
-            {
-                up = false;
-            }
-            if (e.KeyCode == Keys.D)
-            {
-                right = false;
-            }
-            if (e.KeyCode == Keys.S)
-            {
-                down = false;
-            }
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-           
-            Console.WriteLine(uniqueAngles.Count);
             pictureBox.Invalidate();
         }
 
