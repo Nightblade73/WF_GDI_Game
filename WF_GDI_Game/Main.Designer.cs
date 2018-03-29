@@ -47,6 +47,8 @@
             // 
             // timer
             // 
+            this.timer.Enabled = true;
+            this.timer.Interval = 5;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // Main
@@ -55,6 +57,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 450);
             this.Controls.Add(this.pictureBox);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "Main";

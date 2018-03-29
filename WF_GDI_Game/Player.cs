@@ -9,12 +9,12 @@ namespace WF_GDI_Game
 {
     class Player
     {
-        public int X { set; get; }
-        public int Y { set; get; }
+        public float X { set; get; }
+        public float Y { set; get; }
         public int Size { set; get; }
         public int speed = 1;
 
-        public Player(int x, int y, int size)
+        public Player(float x, float y, int size)
         {
             X = x;
             Y = y;
@@ -26,9 +26,11 @@ namespace WF_GDI_Game
             gr.FillEllipse(new SolidBrush(Color.Red), X - Size / 2, Y - Size / 2, Size, Size);
         }
 
-        public void MoveUp()
+        public void MoveUp(float cos, float sin)
         {
-            Y -= speed;
+            X += cos * speed;
+            Y += sin * speed;
+       //     Y -= speed;
         }
 
         public void MoveDown()

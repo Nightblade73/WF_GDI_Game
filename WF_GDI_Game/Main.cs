@@ -16,13 +16,12 @@ namespace WF_GDI_Game
         bool up, down, left, right;
         List<Polygon> polygons;
         Player player;
-        //   Ray ray;
         List<Ray> rays;
         List<ParamPoint> intersects;
         List<UniquePoint> uniquePoints;
         List<float> uniqueAngles;
-        Bitmap bmp;
         Ray mouseRay;
+
         public Main()
         {
             InitializeComponent();
@@ -37,6 +36,7 @@ namespace WF_GDI_Game
             };
             pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
             pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
+            timer.Start();
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
@@ -65,10 +65,12 @@ namespace WF_GDI_Game
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            pictureBox.Invalidate();
+            
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             uniqueAngles.Clear();
             float angleMouseRay = (float)Math.Atan2(mouseRay.Mouse.Y - player.Y, mouseRay.Mouse.X - player.X);
+            float dxАngleMouseRay = (float)Math.Cos(Convert.ToDouble(angleMouseRay));
+            float dyАngleMouseRay = (float)Math.Sin(Convert.ToDouble(angleMouseRay));
             float angleMouseRayLeft = angleMouseRay - 0.5f;
             float angleMouseRayRight = angleMouseRay + 0.5f;
             uniqueAngles.Add(angleMouseRayLeft);
@@ -116,11 +118,8 @@ namespace WF_GDI_Game
             //расчитываешь для каждого уникального угла ближайшую точку пересечения
             for (var j = 0; j < uniqueAngles.Count; j++)
             {
-                var angle = uniqueAngles[j];
-
-                // Calculate dx & dy from angle
-                var dx = Math.Cos(Convert.ToDouble(angle));
-                var dy = Math.Sin(Convert.ToDouble(angle));
+                var dx = Math.Cos(Convert.ToDouble(uniqueAngles[j]));
+                var dy = Math.Sin(Convert.ToDouble(uniqueAngles[j]));
 
                 // Ray from center of screen to mouse
                 rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
@@ -137,7 +136,7 @@ namespace WF_GDI_Game
 
             if (left)
             {
-                Player falsePlayer = new Player(player.X - player.speed*2, player.Y, player.Size);
+                Player falsePlayer = new Player(player.X - player.speed * 2, player.Y, player.Size);
                 if (!Intersection.CheckIntersect(falsePlayer, polygons))
                 {
                     player.MoveLeft();
@@ -148,18 +147,18 @@ namespace WF_GDI_Game
             }
             if (up)
             {
-                Player falsePlayer = new Player(player.X, player.Y - player.speed*2, player.Size);
+                Player falsePlayer = new Player(player.X + dxАngleMouseRay * player.speed * 2, player.Y + dyАngleMouseRay * player.speed * 2, player.Size);
                 if (!Intersection.CheckIntersect(falsePlayer, polygons))
                 {
-                    player.MoveUp();
-                    mouseRay.MoveUp();
+                    player.MoveUp(dxАngleMouseRay, dyАngleMouseRay);
+                    mouseRay.MoveUp(dxАngleMouseRay, dyАngleMouseRay);
                     for (int i = 0; i < rays.Count; i++)
-                        rays[i].MoveUp();
+                        rays[i].MoveUp(dxАngleMouseRay, dyАngleMouseRay);
                 }
             }
             if (right)
             {
-                Player falsePlayer = new Player(player.X + player.speed*2, player.Y, player.Size);
+                Player falsePlayer = new Player(player.X + player.speed * 2, player.Y, player.Size);
                 if (!Intersection.CheckIntersect(falsePlayer, polygons))
                 {
                     player.MoveRight();
@@ -170,7 +169,7 @@ namespace WF_GDI_Game
             }
             if (down)
             {
-                Player falsePlayer = new Player(player.X, player.Y + player.speed*2, player.Size);
+                Player falsePlayer = new Player(player.X, player.Y + player.speed * 2, player.Size);
                 if (!Intersection.CheckIntersect(falsePlayer, polygons))
                 {
                     player.MoveDown();
@@ -209,7 +208,9 @@ namespace WF_GDI_Game
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            
+           
+            Console.WriteLine(uniqueAngles.Count);
+            pictureBox.Invalidate();
         }
 
         private void Main_Load(object sender, EventArgs e)

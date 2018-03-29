@@ -24,9 +24,11 @@ namespace WF_GDI_Game
             gr.DrawLine(new Pen(Color.Red, 1), Begin.X, Begin.Y, Mouse.X, Mouse.Y);
         }
 
-        public void MoveUp()
+        public void MoveUp(float cos, float sin)
         {
-            Begin.Y -= speed;
+            Begin.X += cos * speed;
+            Begin.Y += sin * speed;
+            //     Y -= speed;
         }
 
         public void MoveDown()
