@@ -21,14 +21,14 @@ namespace WF_GDI_Game
 
         public void Draw(Graphics gr)
         {
-            gr.DrawLine(new Pen(Color.Red, 1), Begin.X, Begin.Y, Mouse.X, Mouse.Y);
+            gr.DrawLine(new Pen(Color.White, 1), Begin.X, Begin.Y, Mouse.X, Mouse.Y);
         }
 
         public void MoveUp(float cos, float sin)
         {
-            Begin.X += cos * speed;
-            Begin.Y += sin * speed;
-            //     Y -= speed;
+            //Begin.X += cos * speed;
+            //Begin.Y += sin * speed;
+            Begin.Y -= speed;
         }
 
         public void MoveDown()

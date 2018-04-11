@@ -21,11 +21,13 @@ namespace WF_GDI_Game
         List<UniquePoint> uniquePoints;
         List<float> uniqueAngles;
         Ray mouseRay;
+        Item item;
 
         public Main()
         {
             InitializeComponent();
             player = new Player(20, 20, 20);
+            item = new Item(200, 200);
             polygons = new List<Polygon>();
             uniqueAngles = new List<float>();
             intersects = new List<ParamPoint>();
@@ -64,119 +66,36 @@ namespace WF_GDI_Game
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
-        {           
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //uniqueAngles.Clear();
-            //float angleMouseRay = (float)Math.Atan2(mouseRay.Mouse.Y - player.Y, mouseRay.Mouse.X - player.X);
-            //float dxАngleMouseRay = (float)Math.Cos(Convert.ToDouble(angleMouseRay));
-            //float dyАngleMouseRay = (float)Math.Sin(Convert.ToDouble(angleMouseRay));
-            //float angleMouseRayLeft = angleMouseRay - 0.5f;
-            //float angleMouseRayRight = angleMouseRay + 0.5f;
-            //uniqueAngles.Add(angleMouseRayLeft);
-            //uniqueAngles.Add(angleMouseRayRight);
-            ////высчитываем уникальные углы
-            //for (int j = 0; j < uniquePoints.Count; j++)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            //foreach (Polygon pol in polygons)
             //{
-            //    var uniquePoint = uniquePoints[j];
-            //    float angle = (float)Math.Atan2(uniquePoint.Point.Y - player.Y, uniquePoint.Point.X - player.X);
-            //    if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
-            //    {
-            //        uniquePoint.Angle = angle; // в местах добавления углов доступна оптимизация по выбору полярности векторов
-            //        uniqueAngles.Add((float)(angle - 0.0002));
-            //        uniqueAngles.Add(angle);
-            //        uniqueAngles.Add((float)(angle + 0.0002));
-            //        continue;
-            //    }
-            //    if (angleMouseRayLeft < -Math.PI)
-            //    {
-            //        angle -= (float)(2 * Math.PI);
-            //    }
-            //    else if (angleMouseRayRight > Math.PI)
-            //    {
-            //        angle += (float)(2 * Math.PI);
-            //    }
-            //    else
-            //    {
-            //        continue;
-            //    }
-            //    if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
-            //    {
-            //        uniquePoint.Angle = angle;
-            //        uniqueAngles.Add((float)(angle - 0.0002));
-            //        uniqueAngles.Add(angle);
-            //        uniqueAngles.Add((float)(angle + 0.0002));
-            //    }
+            //    pol.Draw(e.Graphics);
             //}
 
-            //QuickSorting.Sorting(uniqueAngles, 0, uniqueAngles.Count - 1);
-            foreach (Polygon pol in polygons)
-            {
-                pol.Draw(e.Graphics);
-            }
-
             //расчитываешь для каждого уникального угла ближайшую точку пересечения
-            for (var j = 0; j < uniqueAngles.Count; j++)
-            {
-                //var dx = Math.Cos(Convert.ToDouble(uniqueAngles[j]));
-                //var dy = Math.Sin(Convert.ToDouble(uniqueAngles[j]));
 
-                //// Ray from center of screen to mouse
-                //rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
-                //NewRay(rays[j]);
-                rays[j].Draw(e.Graphics);
-            }
             for (var j = 0; j < uniqueAngles.Count - 1; j++)
             {
                 PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
-                e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), p);
+
+
+                e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(255, 255, 255, 255)), p);
             }
+
+            item.Draw(e.Graphics);
+            for (var j = 0; j < uniqueAngles.Count; j++)
+            {
+                rays[j].Draw(e.Graphics);
+            }
+            //fog of war
+            //PointF[] points = { new PointF(player.X, player.Y), rays[0].Mouse, rays[uniqueAngles.Count].Mouse };
+
+            // e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), points);
+            //     e.Graphics.FillRectangle(new SolidBrush(Color.Black), 0,0,640,640);
 
             player.Draw(e.Graphics);
 
-            //if (left)
-            //{
-            //    Player falsePlayer = new Player(player.X - player.speed * 2, player.Y, player.Size);
-            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
-            //    {
-            //        player.MoveLeft();
-            //        mouseRay.MoveLeft();
-            //        for (int i = 0; i < rays.Count; i++)
-            //            rays[i].MoveLeft();
-            //    }
-            //}
-            //if (up)
-            //{
-            //    Player falsePlayer = new Player(player.X + dxАngleMouseRay * player.speed * 2, player.Y + dyАngleMouseRay * player.speed * 2, player.Size);
-            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
-            //    {
-            //        player.MoveUp(dxАngleMouseRay, dyАngleMouseRay);
-            //        mouseRay.MoveUp(dxАngleMouseRay, dyАngleMouseRay);
-            //        for (int i = 0; i < rays.Count; i++)
-            //            rays[i].MoveUp(dxАngleMouseRay, dyАngleMouseRay);
-            //    }
-            //}
-            //if (right)
-            //{
-            //    Player falsePlayer = new Player(player.X + player.speed * 2, player.Y, player.Size);
-            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
-            //    {
-            //        player.MoveRight();
-            //        mouseRay.MoveRight();
-            //        for (int i = 0; i < rays.Count; i++)
-            //            rays[i].MoveRight();
-            //    }
-            //}
-            //if (down)
-            //{
-            //    Player falsePlayer = new Player(player.X, player.Y + player.speed * 2, player.Size);
-            //    if (!Intersection.CheckIntersect(falsePlayer, polygons))
-            //    {
-            //        player.MoveDown();
-            //        mouseRay.MoveDown();
-            //        for (int i = 0; i < rays.Count; i++)
-            //            rays[i].MoveDown();
-            //    }
-            //}
 
         }
 
@@ -208,45 +127,82 @@ namespace WF_GDI_Game
         private void timer_Tick(object sender, EventArgs e)
         {
             uniqueAngles.Clear();
-            //
+            //узнаём вектор взгляда
             float angleMouseRay = (float)Math.Atan2(mouseRay.Mouse.Y - player.Y, mouseRay.Mouse.X - player.X);
+            //считаем косинус и синус угла вектора
             float dxАngleMouseRay = (float)Math.Cos(Convert.ToDouble(angleMouseRay));
             float dyАngleMouseRay = (float)Math.Sin(Convert.ToDouble(angleMouseRay));
+            //выставляем угол обзора
             float angleMouseRayLeft = angleMouseRay - 0.5f;
             float angleMouseRayRight = angleMouseRay + 0.5f;
             uniqueAngles.Add(angleMouseRayLeft);
             uniqueAngles.Add(angleMouseRayRight);
             //высчитываем уникальные углы
-            for (int j = 0; j < uniquePoints.Count; j++)
+            for (int i = 0; i < polygons.Count; i++)
             {
-                var uniquePoint = uniquePoints[j];
-                float angle = (float)Math.Atan2(uniquePoint.Point.Y - player.Y, uniquePoint.Point.X - player.X);
-                if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
+                for (int j = 0; j < polygons[i].segments.Count; j++)
                 {
-                    uniquePoint.Angle = angle; // в местах добавления углов доступна оптимизация по выбору полярности векторов
-                    uniqueAngles.Add((float)(angle - 0.0002));
-                    uniqueAngles.Add(angle);
-                    uniqueAngles.Add((float)(angle + 0.0002));
-                    continue;
-                }
-                if (angleMouseRayLeft < -Math.PI)
-                {
-                    angle -= (float)(2 * Math.PI);
-                }
-                else if (angleMouseRayRight > Math.PI)
-                {
-                    angle += (float)(2 * Math.PI);
-                }
-                else
-                {
-                    continue;
-                }
-                if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
-                {
-                    uniquePoint.Angle = angle;
-                    uniqueAngles.Add((float)(angle - 0.0002));
-                    uniqueAngles.Add(angle);
-                    uniqueAngles.Add((float)(angle + 0.0002));
+                    PointF uniquePoint = polygons[i].segments[j].End;
+                    float angle = (float)Math.Atan2(uniquePoint.Y - player.Y, uniquePoint.X - player.X);
+                    if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
+                    {
+                        //  uniquePoint.Angle = angle; // в местах добавления углов доступна оптимизация по выбору полярности векторов
+                        PointF directiveVector = new PointF(player.Y - uniquePoint.Y, uniquePoint.X - player.X);
+
+                        Segment segBefor = polygons[i].segments[j];
+                        Segment segAfter = polygons[i].segments[(j + 1) % polygons[i].segments.Count];
+                        PointF firstVector = new PointF(segBefor.End.X - segBefor.Begin.X, segBefor.End.Y - segBefor.Begin.Y);
+                        PointF secondVector = new PointF(segAfter.End.X - segAfter.Begin.X, segAfter.End.Y - segAfter.Begin.Y);
+
+                        double directiveVectorLength = Math.Sqrt(directiveVector.X * directiveVector.X + directiveVector.Y * directiveVector.Y);
+                        double firstProjection = (directiveVector.X * firstVector.X + directiveVector.Y * firstVector.Y) / directiveVectorLength;
+                        double secondScalar = (directiveVector.X * secondVector.X + directiveVector.Y * secondVector.Y) / directiveVectorLength;
+
+                        if (firstProjection > 0 & secondScalar > 0 || firstProjection < 0 & secondScalar < 0)
+                        {
+                            uniqueAngles.Add(angle);
+                            continue;
+                        }
+                        uniqueAngles.Add((float)(angle - 0.0002));
+                        uniqueAngles.Add(angle);
+                        uniqueAngles.Add((float)(angle + 0.0002));
+                        continue;
+                    }
+                    if (angleMouseRayLeft < -Math.PI)
+                    {
+                        angle -= (float)(2 * Math.PI);
+                    }
+                    else if (angleMouseRayRight > Math.PI)
+                    {
+                        angle += (float)(2 * Math.PI);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
+                    {
+                        //    uniquePoint.Angle = angle;
+                        PointF directiveVector = new PointF(player.Y - uniquePoint.Y, uniquePoint.X - player.X);
+
+                        Segment segBefor = polygons[i].segments[j];
+                        Segment segAfter = polygons[i].segments[(j + 1) % polygons[i].segments.Count];
+                        PointF firstVector = new PointF(segBefor.End.X - segBefor.Begin.X, segBefor.End.Y - segBefor.Begin.Y);
+                        PointF secondVector = new PointF(segAfter.End.X - segAfter.Begin.X, segAfter.End.Y - segAfter.Begin.Y);
+
+                        double directiveVectorLength = Math.Sqrt(directiveVector.X * directiveVector.X + directiveVector.Y * directiveVector.Y);
+                        double firstProjection = (directiveVector.X * firstVector.X + directiveVector.Y * firstVector.Y) / directiveVectorLength;
+                        double secondScalar = (directiveVector.X * secondVector.X + directiveVector.Y * secondVector.Y) / directiveVectorLength;
+
+                        if (firstProjection > 0 & secondScalar > 0 || firstProjection < 0 & secondScalar < 0)
+                        {
+                            uniqueAngles.Add(angle);
+                            continue;
+                        }
+                        uniqueAngles.Add((float)(angle - 0.0002));
+                        uniqueAngles.Add(angle);
+                        uniqueAngles.Add((float)(angle + 0.0002));
+                    }
                 }
             }
 
@@ -262,7 +218,7 @@ namespace WF_GDI_Game
                 rays[j].Mouse = new PointF((float)(player.X + dx), (float)(player.Y + dy));
                 NewRay(rays[j]);
             }
-
+            //куда идти
             if (left)
             {
                 Player falsePlayer = new Player(player.X - player.speed * 2, player.Y, player.Size);
@@ -276,7 +232,7 @@ namespace WF_GDI_Game
             }
             if (up)
             {
-                Player falsePlayer = new Player(player.X + dxАngleMouseRay * player.speed * 2, player.Y + dyАngleMouseRay * player.speed * 2, player.Size);
+                Player falsePlayer = new Player(player.X, player.Y - player.speed * 2, player.Size);
                 if (!Intersection.CheckIntersect(falsePlayer, polygons))
                 {
                     player.MoveUp(dxАngleMouseRay, dyАngleMouseRay);

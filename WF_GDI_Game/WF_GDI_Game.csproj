@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Intersection.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

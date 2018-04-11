@@ -28,9 +28,9 @@ namespace WF_GDI_Game
 
         public void MoveUp(float cos, float sin)
         {
-            X += cos * speed;
-            Y += sin * speed;
-       //     Y -= speed;
+            //X += cos * speed;
+            //Y += sin * speed;
+            Y -= speed;
         }
 
         public void MoveDown()

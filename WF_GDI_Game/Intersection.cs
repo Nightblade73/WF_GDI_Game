@@ -81,6 +81,7 @@ namespace WF_GDI_Game
             }
             return false;
         }
+
         static bool СircleBySegment(float x1, float y1, float x2, float y2, float x3, float y3, float radius)
         {
             var a = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
@@ -98,18 +99,6 @@ namespace WF_GDI_Game
             }
 
             return (a + b + c < 0);
-        }
-        static bool CheckArea(Player player, Segment segment)
-        {
-            if (segment.Begin.X > segment.End.X)
-            {
-                Console.WriteLine(true);
-                return true;
-            }
-            else  //нет корней
-            {
-                return false;
-            }
         }
     }
 }
