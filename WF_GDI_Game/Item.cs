@@ -20,7 +20,7 @@ namespace WF_GDI_Game
         public void Draw(Graphics gr, float width)
         {
             gr.FillRectangle(new SolidBrush(Color.Yellow), Position.X-size/2, Position.Y - size / 2, size, size);
-            gr.DrawRectangle(new Pen(Color.Green, width), Position.X - size / 2, Position.Y - size / 2, size, size);
+            gr.DrawRectangle(new Pen(Color.Red, width), Position.X - size / 2, Position.Y - size / 2, size, size);
 
         }
         public void Draw(Graphics gr)

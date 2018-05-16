@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WF_GDI_Game.Properties;
 
 namespace WF_GDI_Game
 {
@@ -54,8 +55,8 @@ namespace WF_GDI_Game
             };
             raysFOG = new List<Ray>();
             raysBACK = new List<Ray>();
-            pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
-            pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
+   //         pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
+   //         pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
             timer.Start();
         }
 
@@ -89,23 +90,19 @@ namespace WF_GDI_Game
         }
         private void InvalidatePictureBox()
         {
-
             if (bmp != null)
                 bmp.Dispose();
-            bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
+            bmp = new Bitmap(Resources.игровое_поле);
             Graphics gr = Graphics.FromImage(bmp);
-          //  gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //foreach (Polygon pol in polygons)
-            //{
-            //    pol.Draw(gr);
-            //}
+            //  gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
 
             //расчитываешь для каждого уникального угла ближайшую точку пересечения
 
             for (var j = 0; j < uniqueAngles.Count - 1; j++)
             {
                 PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
-                gr.FillPolygon(new SolidBrush(Color.FromArgb(255, 255, 255, 255)), p);
+     //           gr.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), p);
             }
             for (int i = 0; i < items.Count; i++)
             {
@@ -167,7 +164,10 @@ namespace WF_GDI_Game
 
             // e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), points);
             //     e.Graphics.FillRectangle(new SolidBrush(Color.Black), 0,0,640,640);
-
+            foreach (Polygon pol in polygons)
+            {
+                pol.Draw(gr);
+            }
             player.Draw(gr);
             pictureBox.Image = bmp;
         }
@@ -320,50 +320,6 @@ namespace WF_GDI_Game
                     continue;
                 }
                 uniqueAnglesNotOnFOV.Add(angle);
-
-                //if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
-                //{
-                //    continue;
-                //}
-                //if (angle < newAngleMouseRayLeft & angle > newAngleMouseRayRight)
-                //{
-                //    uniqueAnglesNotOnFOV.Add(angle);
-                //    continue;
-                //}
-                //if (angle < newAngleMouseRayLeft & angle > newAngleMouseRayRight)
-                //{
-                //    uniqueAnglesNotOnFOV.Add(angle);
-                //    continue;
-                //}
-                //if (angle > newAngleMouseRayLeft & angle > newAngleMouseRayRight)
-                //{
-                //    uniqueAnglesNotOnFOV.Add(angle);
-                //    continue;
-                //}
-                //if (angle < newAngleMouseRayLeft & angle < newAngleMouseRayRight)
-                //{
-                //    uniqueAnglesNotOnFOV.Add(angle);
-                //    continue;
-                //}
-
-
-                //if (angleMouseRayLeft < -Math.PI)
-                //{
-                //    angleMouseRayLeft += (float)(2 * Math.PI);
-                //}
-                //else if (angleMouseRayRight > Math.PI)
-                //{
-
-                //}
-                //else
-                //{
-                //    continue;
-                //}
-                //    if (angle < angleMouseRayLeft & angle > angleMouseRayRight)
-                //{
-                //    uniqueAnglesNotOnFOV.Add(angle);
-                //    continue;
-                //}
             }
 
             uniqueAnglesNotOnFOV.Add(angleMouseRayRight);
