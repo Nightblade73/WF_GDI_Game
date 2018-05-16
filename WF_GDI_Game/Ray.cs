@@ -21,6 +21,7 @@ namespace WF_GDI_Game
 
         public void Draw(Graphics gr)
         {
+
             gr.DrawLine(new Pen(Color.White, 1), Begin.X, Begin.Y, Mouse.X, Mouse.Y);
         }
 
