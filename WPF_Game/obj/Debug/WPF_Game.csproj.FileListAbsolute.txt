@@ -1,0 +1,15 @@
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\bin\Debug\WPF_Game.exe.config
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\bin\Debug\WPF_Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\bin\Debug\WPF_Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.csprojResolveAssemblyReference.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\MainWindow.g.cs
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\App.g.cs
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game_MarkupCompile.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game_MarkupCompile.lref
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\MainWindow.baml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.g.resources
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.Properties.Resources.resources
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.csproj.GenerateResource.Cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.csproj.CoreCompileInputs.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\obj\Debug\WPF_Game.pdb

@@ -1,0 +1,18 @@
+﻿<Window x:Class="WPF_Game.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Game"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="492" Width="862" Loaded="Window_Loaded" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Grid Width="640" Height="460" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas x:Name="GameField" Height="460" VerticalAlignment="Top" Margin="0,0,52,0" Width="640" MouseMove="GameField_MouseMove" MouseUp="GameField_MouseUp">
+            <Canvas.Background>
+                <ImageBrush ImageSource="C:\Users\v-zar\Source\Repos\WF_GDI_Game\WPF_Game\Resources\игровое поле.jpg"/>
+            </Canvas.Background>
+        </Canvas>
+        <Label x:Name="ItemCounts" Content="Слитков золота найден: 0" HorizontalAlignment="Left" Margin="645,8,-212,0" VerticalAlignment="Top" Width="207" FontSize="16"/>
+        <Label x:Name="Description" Content="Необходимо найти&#xD;&#xA;5 слитков золота" HorizontalAlignment="Left" Margin="645,394,-212,0" VerticalAlignment="Top" Width="207" Height="66" FontSize="22"/>
+    </Grid>
+</Window>

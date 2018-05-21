@@ -1,0 +1,50 @@
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\Game.exe.config
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\Game.exe
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\Game.pdb
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Desktop.dll
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.dll
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.DXGI.dll
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Mathematics.dll
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.xml
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Desktop.xml
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.DXGI.xml
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\bin\Debug\SharpDX.Mathematics.xml
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\obj\Debug\Game.exe
+C:\Users\DLT-BOY\Documents\Visual Studio 2012\Projects\Game\Game\obj\Debug\Game.pdb
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\Game.exe.config
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\Game.exe
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\Game.pdb
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\SharpDX.xml
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\SharpDX.Desktop.xml
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\SharpDX.DXGI.xml
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\bin\Debug\SharpDX.Mathematics.xml
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\obj\Debug\Game.exe
+C:\Users\v-zar\Downloads\Tutorial1\Game\Game\obj\Debug\Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\Game.exe.config
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Desktop.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.DXGI.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Mathematics.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.pdb

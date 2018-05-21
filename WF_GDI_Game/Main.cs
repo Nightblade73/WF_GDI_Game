@@ -31,18 +31,25 @@ namespace WF_GDI_Game
         float angleMouseRayLeft;
         float angleMouseRayRight;
         Bitmap bmp;
+        Exit exit;
 
         public Main()
         {
             InitializeComponent();
+            ItemCounts.Text = "Слитков золота найден: 0";
             rand = new Random();
             player = new Player(20, 20, 25, 0);
             items = new List<Item>();
             //     for(int i = 0; i< rand.Next(2,4); i++)
-            for (int i = 0; i < 2; i++)
+            int k = rand.Next(1, 2);
+            int j = rand.Next(0, 1);
+
+            for (int i = 0; i < 5; i++)
             {
-                items.Add(new Item(RandomGenerate.GetCoord(i).X, RandomGenerate.GetCoord(i).Y));
+                Item item = new Item(RandomGenerate.GetCoord((k * i + j) % 9).X, RandomGenerate.GetCoord((k * i + j) % 9).Y);
+                items.Add(item);
             }
+            exit = new Exit(RandomGenerate.GetCoord(rand.Next(9, 12)).X, RandomGenerate.GetCoord(rand.Next(9, 12)).Y);
             polygons = new List<Polygon>();
             uniqueAngles = new List<float>();
             uniqueAnglesNotOnFOV = new List<float>();
@@ -55,8 +62,8 @@ namespace WF_GDI_Game
             };
             raysFOG = new List<Ray>();
             raysBACK = new List<Ray>();
-   //         pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
-   //         pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
+            //         pictureBox.Width = SystemInformation.PrimaryMonitorSize.Width;
+            //         pictureBox.Height = SystemInformation.PrimaryMonitorSize.Height;
             timer.Start();
         }
 
@@ -83,11 +90,6 @@ namespace WF_GDI_Game
                 down = true;
             }
         }
-
-        private void pictureBox_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
         private void InvalidatePictureBox()
         {
             if (bmp != null)
@@ -97,12 +99,14 @@ namespace WF_GDI_Game
             //  gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
 
-            //расчитываешь для каждого уникального угла ближайшую точку пересечения
+            if (items.Count == 0)
+            {
+                exit.Draw(gr);
+            }
 
             for (var j = 0; j < uniqueAngles.Count - 1; j++)
             {
                 PointF[] p = { new PointF(player.X, player.Y), rays[j].Mouse, rays[j + 1].Mouse };
-     //           gr.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), p);
             }
             for (int i = 0; i < items.Count; i++)
             {
@@ -127,8 +131,6 @@ namespace WF_GDI_Game
             PointF last = new PointF();
             for (var j = 0; j < uniqueAnglesNotOnFOV.Count; j++)
             {
-                //PointF[] p = { new PointF(player.X, player.Y), raysFOG[j].Mouse, raysFOG[(j + 1) % uniqueAnglesNotOnFOV.Count].Mouse };
-                //gr.FillPolygon(new SolidBrush(Color.FromArgb(255, 0, 0, 0)), p);
 
                 if (uniqueAnglesNotOnFOV[j] < angleMouseRayLeft)
                 {
@@ -154,16 +156,7 @@ namespace WF_GDI_Game
             }
             if (backViewSide.Count > 0)
                 gr.FillPolygon(new SolidBrush(Color.FromArgb(255, 0, 0, 0)), backViewSide.ToArray());
-            //for (var j = 0; j < uniqueAnglesNotOnFOV.Count; j++)
-            //{
-            //    raysFOG[j].Draw(e.Graphics);
-            //}
-            //e.Graphics.FillPie();
-            //fog of war
-            //PointF[] points = { new PointF(player.X, player.Y), rays[0].Mouse, rays[uniqueAngles.Count].Mouse };
 
-            // e.Graphics.FillPolygon(new SolidBrush(Color.FromArgb(50, 255, 255, 255)), points);
-            //     e.Graphics.FillRectangle(new SolidBrush(Color.Black), 0,0,640,640);
             foreach (Polygon pol in polygons)
             {
                 pol.Draw(gr);
@@ -199,6 +192,15 @@ namespace WF_GDI_Game
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            if (items.Count == 0)
+            {
+                Description.Text = "Найдите выход!";
+            }
+                if (items.Count == 0 && Math.Abs(exit.Position.X - player.X) < 40 && Math.Abs(exit.Position.Y - player.Y) < 40)
+            {
+                Description.Text = "Вы победили!";
+                timer.Stop();
+            }
             uniqueAngles.Clear();
             uniqueAnglesNotOnFOV.Clear();
             //узнаём вектор взгляда
@@ -299,7 +301,7 @@ namespace WF_GDI_Game
                 PointF uniquePoint = polygons[0].segments[j].End;
                 float angle = (float)Math.Atan2(uniquePoint.Y - player.Y, uniquePoint.X - player.X);
                 if (angle > angleMouseRayLeft & angle < angleMouseRayRight)
-                {                   
+                {
                     continue;
                 }
                 if (angleMouseRayLeft < -Math.PI)
@@ -412,18 +414,6 @@ namespace WF_GDI_Game
             InvalidatePictureBox();
         }
 
-        private void pictureBox_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (CheckPlayerPosition(i))
-                    if (CheckCursor(i))
-                    {
-                        items.RemoveAt(i);
-                        i--;
-                    }
-            }
-        }
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -465,6 +455,7 @@ namespace WF_GDI_Game
                 raysFOG.Add(ray);
             }
         }
+
         private void NewRay(Ray ray)
         {
             ParamPoint closestIntersect = null;
@@ -517,6 +508,7 @@ namespace WF_GDI_Game
             if (closestIntersect != null)
                 ray.Mouse = new PointF(closestIntersect.Intersection.X, closestIntersect.Intersection.Y);
         }
+
         private bool CheckPlayerPosition(int i)
         {
             if (Math.Abs(items[i].Position.X - player.X) < 40 && Math.Abs(items[i].Position.Y - player.Y) < 40)
@@ -524,16 +516,30 @@ namespace WF_GDI_Game
                 return true;
             }
             return false;
-
         }
+
         private bool CheckCursor(int i)
         {
-            if (items[i].Position.X - items[i].size / 2 < Cursor.Position.X && items[i].Position.X + items[i].size / 2 > Cursor.Position.X &&
-                           items[i].Position.Y - items[i].size / 2 < Cursor.Position.Y && items[i].Position.Y + items[i].size / 2 > Cursor.Position.Y)
+            if (items[i].Position.X - items[i].size / 2 < mouseRay.Mouse.X && items[i].Position.X + items[i].size / 2 > mouseRay.Mouse.X &&
+                           items[i].Position.Y - items[i].size / 2 < mouseRay.Mouse.Y && items[i].Position.Y + items[i].size / 2 > mouseRay.Mouse.Y)
             {
                 return true;
             }
             return false;
+        }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (CheckPlayerPosition(i))
+                    if (CheckCursor(i))
+                    {
+                        items.RemoveAt(i);
+                        i--;
+                        ItemCounts.Text = "Слитков золота найден: " + (5 - items.Count);
+                    }
+            }
         }
     }
 }

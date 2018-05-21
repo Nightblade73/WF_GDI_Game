@@ -1,0 +1,15 @@
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\DX_Game.csproj.GenerateResource.Cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\DX_Game.csproj.CoreCompileInputs.cache
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\Game.exe.config
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\Game.exe
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\Game.pdb
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Desktop.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.DXGI.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\bin\Debug\SharpDX.Mathematics.xml
+C:\Users\v-zar\Source\Repos\WF_GDI_Game\Game\obj\Debug\DX_Game.csprojResolveAssemblyReference.cache

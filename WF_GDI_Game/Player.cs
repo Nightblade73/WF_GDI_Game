@@ -14,7 +14,7 @@ namespace WF_GDI_Game
         public float Y { set; get; }
         public int Size { set; get; }
         public int ВirectionOfSight { set; get; }
-        public int speed = 1;
+        public float speed = 0.1f;
 
         public Player(float x, float y, int size, int birectionOfSight)
         {

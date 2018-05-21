@@ -10,31 +10,23 @@ namespace WF_GDI_Game
     class Ray
     {
         public PointF Begin = new Point();
-        private int speed = 1;
+        public float speed = 0.1f;
         public PointF Mouse { set; get; }
 
-        //public Ray(int x, int y)
-        //{
-        //    X = x;
-        //    Y = y;
-        //}
 
         public void Draw(Graphics gr)
         {
-
             gr.DrawLine(new Pen(Color.White, 1), Begin.X, Begin.Y, Mouse.X, Mouse.Y);
         }
 
         public void MoveUp(float cos, float sin)
         {
-            //Begin.X += cos * speed;
-            //Begin.Y += sin * speed;
             Begin.Y -= speed;
         }
 
         public void MoveDown()
         {
-            Begin. Y += speed;
+            Begin.Y += speed;
         }
 
         public void MoveRight()

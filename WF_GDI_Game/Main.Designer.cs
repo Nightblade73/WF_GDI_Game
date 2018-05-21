@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.ItemCounts = new System.Windows.Forms.Label();
+            this.Description = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,26 +52,47 @@
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             this.pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
-            this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox_Paint);
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
+            // 
+            // ItemCounts
+            // 
+            this.ItemCounts.AutoSize = true;
+            this.ItemCounts.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ItemCounts.Location = new System.Drawing.Point(647, 13);
+            this.ItemCounts.Name = "ItemCounts";
+            this.ItemCounts.Size = new System.Drawing.Size(191, 18);
+            this.ItemCounts.TabIndex = 1;
+            this.ItemCounts.Text = "Слитков золота найден: 0";
+            // 
+            // Description
+            // 
+            this.Description.AutoSize = true;
+            this.Description.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Description.Location = new System.Drawing.Point(649, 401);
+            this.Description.Name = "Description";
+            this.Description.Size = new System.Drawing.Size(201, 50);
+            this.Description.TabIndex = 2;
+            this.Description.Text = "Необходимо найти\r\n5 слитков золота";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 460);
+            this.ClientSize = new System.Drawing.Size(862, 461);
+            this.Controls.Add(this.Description);
+            this.Controls.Add(this.ItemCounts);
             this.Controls.Add(this.pictureBox);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "Main";
             this.Text = "Form1";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Main_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Main_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -77,6 +100,8 @@
 
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Label ItemCounts;
+        private System.Windows.Forms.Label Description;
     }
 }
 
